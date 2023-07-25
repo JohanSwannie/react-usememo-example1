@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
 function App() {
+  const [number, setNumber] = useState(0);
+  const [dark, setDark] = useState(false);
+  const calcNumber = slowCalculation(number);
+  const themeStyle = {
+    color: dark ? "white" : "black",
+    backgroundColor: dark ? "black" : "white",
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        type="number"
+        value={number}
+        onClick={(event) => setNumber(parseInt(event.target.value))}
+      />
+      <button onClick={() => setDark(prevDark != prevDark)}>
+        Change the Theme
+      </button>
+      <h3 style={themeStyle}>{calcNumber}</h3>
     </div>
   );
 }
 
 export default App;
+
+const slowCalculation = (num) => {
+  for (let i = 0; i < 1000000000; i++) {
+    return num * 5;
+  }
+};

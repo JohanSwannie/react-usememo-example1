@@ -15,7 +15,7 @@ function App() {
         value={number}
         onClick={(event) => setNumber(parseInt(event.target.value))}
       />
-      <button onClick={() => setDark(prevDark != prevDark)}>
+      <button onClick={() => setDark((prevDark) => !prevDark)}>
         Change the Theme
       </button>
       <h3 style={themeStyle}>{calcNumber}</h3>

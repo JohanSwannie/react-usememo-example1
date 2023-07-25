@@ -1,24 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 
 function App() {
   const [number, setNumber] = useState(0);
   const [dark, setDark] = useState(false);
-  const calcNumber = slowCalculation(number);
-  const themeStyle = {
-    color: dark ? "white" : "black",
-    backgroundColor: dark ? "black" : "white",
-  };
+  const [themeChangeCounter, setThemeChangeCounter] = useState(0);
+
+  const calcNumber = useMemo(() => {
+    return slowCalculation(number);
+  }, [number]);
+
+  const themeStyle = useMemo(() => {
+    return {
+      color: dark ? "white" : "navy",
+      backgroundColor: dark ? "navy" : "white",
+    };
+  }, [dark]);
+
+  useEffect(() => {
+    setThemeChangeCounter(
+      (prevThemeChangeCounter) => prevThemeChangeCounter + 1
+    );
+  }, [themeStyle]);
+
   return (
     <div className="App">
       <input
         type="number"
         value={number}
-        onClick={(event) => setNumber(parseInt(event.target.value))}
+        onChange={(event) => setNumber(parseInt(event.target.value))}
       />
+      <br />
       <button onClick={() => setDark((prevDark) => !prevDark)}>
         Change the Theme
       </button>
       <h3 style={themeStyle}>{calcNumber}</h3>
+      <h3>{themeChangeCounter}</h3>
     </div>
   );
 }
